@@ -9,21 +9,23 @@ function TradeStore() {
   const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
-    setTrades()
+    const trades = JSON.parse(localStorage.getItem("trades"));
+    console.log(trades)
+    if (trades && trades.length > 0) {
+      trades.forEach(trade=>{
+        trade.expired = new Date(trade.maturityDate) < new Date() ? 'T' : 'F'
+      })
+      setTradeList(trades);
+      console.log(tradeList)
+    } else {
+      localStorage.setItem("trades", JSON.stringify([]));
+    }
   }, [showForm]);
 
   const handleToogle = () => {
     setShowForm((status) => !status);
   };
 
-  const setTrades = () => {
-    const trades = JSON.parse(localStorage.getItem("trades"));
-    if (trades && trades.length > 0) {
-      setTradeList(trades);
-    } else {
-      localStorage.setItem("trades", JSON.stringify([]));
-    }
-  }
   return (
     <div className="trade-store">
       {showForm ? (

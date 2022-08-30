@@ -7,7 +7,6 @@ function TradeForm({ handleToogle }) {
   const [counterPartyId, setCounterPartyId] = useState("");
   const [bookId, setBookId] = useState("");
   const [maturityDate, setMaturityDate] = useState("");
-  const [createdDate, setCreatedDate] = useState("");
 
   const handleSubmit = (e) => {
     const trade = {
@@ -16,8 +15,7 @@ function TradeForm({ handleToogle }) {
       counterPartyId,
       bookId,
       maturityDate,
-      createdDate,
-      expired: new Date(createdDate) >= new Date(maturityDate) ? 'T' : 'F'
+      createdDate: getTodaysDate()
     };
     if (validteForm(trade)) {
       if(new Date(trade.maturityDate) < new Date()) {
@@ -34,6 +32,13 @@ function TradeForm({ handleToogle }) {
     e.preventDefault();
   };
 
+  const getTodaysDate = () => {
+    const date = new Date();
+    const month = `0${date.getMonth()}`.slice(-2)
+    const day = `0${date.getDate()}`.slice(-2)
+    return `${date.getFullYear()}-${month}-${day}`
+  }
+
   const validteForm = (trade) => {
     return Object.values(trade).every((value) => value && value !== "");
   };
@@ -44,7 +49,6 @@ function TradeForm({ handleToogle }) {
     setCounterPartyId("");
     setBookId("");
     setMaturityDate("");
-    setCreatedDate("");
     e.target.reset();
   };
   return (
@@ -93,14 +97,6 @@ function TradeForm({ handleToogle }) {
               htmlFor="maturity-date"
               type="date"
               onChange={(e) => setMaturityDate(e.target.value)}
-            />
-          </div>
-          <div className="created-date form-control">
-            <label id="created-date">Created date:</label>
-            <input
-              htmlFor="created-date"
-              type="date"
-              onChange={(e) => setCreatedDate(e.target.value)}
             />
           </div>
           <button className="submit" type="submit">

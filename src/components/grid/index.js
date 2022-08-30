@@ -45,30 +45,34 @@ function Grid({ children, columnsDefs, data }) {
   }, [data]);
 
   useEffect(() => {
-    const startIndex = (currentPage - 1) * PER_PAGE + 1;
-    const endIndex =
-      startIndex + PER_PAGE <= data.length
-        ? startIndex + PER_PAGE
-        : data.length;
-    const filteredData = [];
-    for (let i = startIndex; i < endIndex; i++) {
-      filteredData.push(
-        <tr className="data-row" key={i}>
-          {Object.entries(data[i]).map(([key, value]) => (
-            <td className="cell" key={key}>
-              {value}
-            </td>
-          ))}
-        </tr>
-      );
-    }
-    if (filteredData.length < PER_PAGE) {
-      const emptyList = new Array(PER_PAGE - filteredData.length).fill(
-        <tr className="data-row"><td colSpan={7}></td></tr>
-      );
-      setPaginatedData([...filteredData, ...emptyList]);
-    } else {
-      setPaginatedData([filteredData]);
+    if (data && data.length > 0) {
+      const startIndex = (currentPage - 1) * PER_PAGE + 1;
+      const endIndex =
+        startIndex + PER_PAGE <= data.length
+          ? startIndex + PER_PAGE
+          : data.length;
+      const filteredData = [];
+      for (let i = startIndex - 1; i < endIndex; i++) {
+        filteredData.push(
+          <tr className="data-row" key={i}>
+            {Object.entries(data[i]).map(([key, value]) => (
+              <td className="cell" key={key}>
+                {value}
+              </td>
+            ))}
+          </tr>
+        );
+      }
+      if (filteredData.length < PER_PAGE) {
+        const emptyList = new Array(PER_PAGE - filteredData.length).fill(
+          <tr className="data-row">
+            <td colSpan={7}></td>
+          </tr>
+        );
+        setPaginatedData([...filteredData, ...emptyList]);
+      } else {
+        setPaginatedData([filteredData]);
+      }
     }
   }, [currentPage, data]);
 
