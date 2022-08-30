@@ -1,0 +1,24 @@
+.app {
+  header {
+    height: 40px;
+    width: 100%;
+    background-color: #c03546;
+    color: white;
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+    padding: 10px 20px;
+  }
+  button{
+    background-color: #c03546;
+    color: white;
+    height: 30px;
+    border: 0px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-family: inherit;
+  }
+}

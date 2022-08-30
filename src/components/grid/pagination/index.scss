@@ -1,0 +1,27 @@
+.pagination {
+  margin-top: 10px;
+  display: flex;
+  div {
+    margin: 5px;
+    height: 35px;
+    width: 35px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(128, 128, 128, 0.44);
+    cursor: pointer;
+    &:hover {
+      &:not(.active) {
+        background-color: #c0354518;
+      }
+    }
+  }
+  .active {
+    background-color: #c03546;
+    color: white;
+  }
+  .disabled {
+    pointer-events: none;
+    cursor: not-allowed;
+    opacity: 0.4;
+  }
+}

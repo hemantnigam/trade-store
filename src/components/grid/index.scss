@@ -1,0 +1,34 @@
+.grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  table {
+      margin-top: 50px;
+      border: 1px solid rgba(128, 128, 128, 0.44);
+      tr {
+        &.data-row{
+          height: 40px;
+        }
+        &.no-data{
+          height: 400px;
+          text-align: center;
+        }
+        .cell {
+          width: 150px;
+          text-align: center;
+        }
+      }
+      thead {
+        background-color: #c03546;
+        color: white;
+        height: 40px;
+      }
+      tbody {
+        tr {
+          &:nth-child(even) {
+            background-color: rgba(128, 128, 128, 0.19);
+          }
+        }
+      }
+  }
+}
