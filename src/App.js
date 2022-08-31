@@ -5,7 +5,7 @@ function App() {
   return (
     <div className="app">
       <header>Trade Store</header>
-      <TradeStore></TradeStore>
+      <TradeStore />
     </div>
   );
 }

@@ -1,27 +1,45 @@
-.form-container {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  .trade-form {
-    margin: 0px 10px;
-    .form-control {
-      margin: 10px;
+.trade-form {
+  position: relative;
+  .form-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    form {
+      margin: 0px 10px;
+      .form-control {
+        margin: 10px;
+      }
+      label {
+        color: #000000bd;
+        width: 200px;
+        display: inline-block;
+      }
+      input {
+        height: 30px;
+        width: 200px;
+        text-indent: 10px;
+      }
     }
-    label {
-     color: #000000bd;
-     width: 200px;
-     display: inline-block;
-    }
-    input {
-      height: 30px;
-      width: 200px;
-      text-indent: 10px;
+    .submit {
+      margin: 0 auto;
     }
   }
-  .submit {
-    margin: 0 auto;
+  .action-btns {
+    margin: 20px;
   }
-}
-.action-btns {
-  margin: 20px;
+  .notification {
+    height: 20px;
+    width: 400px;
+    position: absolute;
+    top: -18px;
+    display: flex;
+    color: white;
+    right: 38%;
+    justify-content: space-between;
+    padding: 10px;
+    align-items: center;
+    .close {
+      cursor: pointer;
+    }
+  }
 }

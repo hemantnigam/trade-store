@@ -9,8 +9,14 @@ function Grid({ children, columnsDefs, data }) {
   const [totalPages, setTotalPage] = useState(0);
   const [paginatedData, setPaginatedData] = useState([]);
 
+  /**
+   *
+   * @param {*} type checks if type is number or string
+   */
   const handleClick = (type) => {
     const count = totalPages;
+
+    // checks if clicked button is page number or not
     if (typeof type === "string") {
       if (type === "prevLast") {
         setCurrentPage(1);
@@ -45,14 +51,17 @@ function Grid({ children, columnsDefs, data }) {
   }, [data]);
 
   useEffect(() => {
+    //checks if data is empty or not
     if (data && data.length > 0) {
-      const startIndex = (currentPage - 1) * PER_PAGE + 1;
+      const startIndex = (currentPage - 1) * PER_PAGE;
       const endIndex =
         startIndex + PER_PAGE <= data.length
           ? startIndex + PER_PAGE
           : data.length;
       const filteredData = [];
-      for (let i = startIndex - 1; i < endIndex; i++) {
+
+      //iterate over all trades and generate trade jsx
+      for (let i = startIndex; i < endIndex; i++) {
         filteredData.push(
           <tr className="data-row" key={i}>
             {Object.entries(data[i]).map(([key, value]) => (
@@ -63,12 +72,16 @@ function Grid({ children, columnsDefs, data }) {
           </tr>
         );
       }
+
+      //adds empty rows to have fixed height grid.
       if (filteredData.length < PER_PAGE) {
-        const emptyList = new Array(PER_PAGE - filteredData.length).fill(
-          <tr className="data-row">
-            <td colSpan={7}></td>
-          </tr>
-        );
+        const emptyList = new Array(PER_PAGE - filteredData.length)
+          .fill()
+          .map((_, index) => (
+            <tr key={index} className="data-row">
+              <td colSpan={7}></td>
+            </tr>
+          ));
         setPaginatedData([...filteredData, ...emptyList]);
       } else {
         setPaginatedData([filteredData]);
@@ -76,6 +89,11 @@ function Grid({ children, columnsDefs, data }) {
     }
   }, [currentPage, data]);
 
+  /**
+   *
+   * @param {*} start starting page number in pagination
+   * @param {*} end ending page number in pagination
+   */
   const updatePageList = (start, end) => {
     const pages = [];
     for (let i = start; i <= end; i++) {
@@ -85,11 +103,11 @@ function Grid({ children, columnsDefs, data }) {
   };
 
   return (
-    <div className="grid">
+    <div className="grid" data-testid="grid">
       {children}
       <table>
         <thead>
-          <tr>
+          <tr data-testid="data-row">
             {columnsDefs.map((column, index) => (
               <th className="cell" key={index}>
                 {column.header}
@@ -101,7 +119,7 @@ function Grid({ children, columnsDefs, data }) {
           {data && data.length > 0 ? (
             paginatedData
           ) : (
-            <tr className="no-data">
+            <tr className="no-data" data-testid="no-data">
               <td colSpan={columnsDefs.length}>
                 No trades available in the store.
               </td>
@@ -109,12 +127,14 @@ function Grid({ children, columnsDefs, data }) {
           )}
         </tbody>
       </table>
-      <Pagination
-        pages={pages}
-        currentPage={currentPage}
-        handleClick={handleClick}
-        totalPages={totalPages}
-      />
+      {data && data.length > 0 && (
+        <Pagination
+          pages={pages}
+          currentPage={currentPage}
+          handleClick={handleClick}
+          totalPages={totalPages}
+        />
+      )}
     </div>
   );
 }
